@@ -15,7 +15,7 @@ X = dr.x_train
 Y = dr.y_train
 
 
-s = svm.SVC(gamma=0.001)
+s = svm.SVC(kernel='linear', gamma=0.001, C=10)
 s.fit(X,Y) #분류 모델 훈련
 
 res = s.predict(dr.x_test) #테스트

@@ -14,9 +14,9 @@ X=dr.x_train
 Y=dr.y_train
 mlp = MLPClassifier(hidden_layer_sizes=(100),
                     learning_rate_init=0.001,
-                    batch_size=32,
+                    batch_size=256,
                     max_iter=300,
-                    solver='sdg',
+                    solver='adam',
                     verbose=True)
 mlp.fit(X, Y)
 
