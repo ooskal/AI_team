@@ -7,11 +7,11 @@ Created on Sun Jun  5 13:27:34 2022
 """
 
 from sklearn import svm
-import data_reader_p
+import data_reader
 from sklearn.metrics import precision_score
 
 
-dr = data_reader_p.DataReader()
+dr = data_reader.DataReader()
 
 c = 0.01
 

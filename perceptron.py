@@ -1,21 +1,38 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Sat Jun  4 09:50:47 2022
+Created on Sun May 29 16:25:16 2022
 
-@author: user
+@author: siyeon
 """
 
 from sklearn.linear_model import Perceptron
-import numpy as np
 import data_reader
+from sklearn.metrics import precision_score
 
 dr = data_reader.DataReader()
-X=dr.x_train
-Y=dr.y_train
 
-p = Perceptron(max_iter=100, eta0=0.001,verbose=0,random_state=1)
-p.fit(X, Y)
 
-res = p.predict(dr.x_test)
 
-print("정확률: {:.2f}".format(np.mean(res==dr.y_test)))
+#max_iter:epoch수, eta0 : 학습률
+m = 100
+
+for i in range(3):
+    e = 0.0001
+    
+    for i in range(7):
+        
+        p = Perceptron(max_iter=m, eta0=e, random_state=1)
+        p.fit(dr.x_train, dr.y_train)
+        res = p.predict(dr.x_test)
+        
+        print("\nmax_iter = " + str(m) + " eta0 = " + str(e))
+        print("훈련 세트 정확도: {:.3f}".format(p.score(dr.x_train, dr.y_train)))
+        print("테스트 세트 정확도: {:.3f}".format(p.score(dr.x_test, dr.y_test)))
+        print("정밀도: " + str(precision_score(dr.y_test, res)))
+        e = e * 10
+    
+    m = m + 200
+    
+
+
