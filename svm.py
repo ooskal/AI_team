@@ -1,25 +1,34 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Sat Jun  4 08:59:37 2022
+Created on Sun Jun  5 13:27:34 2022
 
-@author: user
+@author: siyeon
 """
 
-import numpy as np
 from sklearn import svm
-from sklearn.model_selection import train_test_split
-import data_reader
-
-dr = data_reader.DataReader()
-X = dr.x_train
-Y = dr.y_train
+import data_reader_p
+from sklearn.metrics import precision_score
 
 
-s = svm.SVC(kernel='linear', gamma=0.001, C=10)
-s.fit(X,Y) #분류 모델 훈련
+dr = data_reader_p.DataReader()
 
-res = s.predict(dr.x_test) #테스트
-print("정확률: {:.2f}".format(np.mean(res==dr.y_test)))
+c = 0.01
 
+for i in range(5):
+    m = 1000
+    
+    for i in range(8):
+        
+        model = svm.SVC(kernel='linear', C=c, max_iter=m).fit(dr.x_train, dr.y_train)
+        res = model.predict(dr.x_test)
+        
+        print("\nC = " + str(c) + " max_iter = " +str(m))
+        print("훈련 세트 정확도: {:.3f}".format(model.score(dr.x_train, dr.y_train)))
+        print("테스트 세트 정확도: {:.3f}".format(model.score(dr.x_test, dr.y_test)))
+        print("정밀도: " + str(precision_score(dr.y_test, res)))
+        
+        m = m + 1000
 
-#참고 사이트 : https://bskyvision.com/851
+    c = c * 10
+    
